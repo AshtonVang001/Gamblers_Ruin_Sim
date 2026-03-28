@@ -14,14 +14,10 @@ class Simulation(Rules):
         else:
             self.money -= self.bet
 
-    #right now player money is not saving
-    #need state for the money
-    #also right now game is stopping after each bet - which should not happen
-    #game should only stop when player wants it to, they run out of money, or they reach the goal
     def play(self):
         willPlay = input("Would you like to play y/n?")
         if(willPlay == "y"):
-            while(self.money != self.goal and self.money != self.lose_condition): #this is the wrong loop
+            while(self.money != self.goal and self.money != self.lose_condition): 
                 willBet = input("Would you like to bet y/n?")
                 if willBet == "y":
                     self.rounds += 1
