@@ -1,5 +1,6 @@
 #rules class
 class Rules:
+    #set the rules for the game
     def __init__(self, money=10, goal=20, lose_condition=0, probability=0.5):
         self.money = money
         self.goal = goal
@@ -12,4 +13,3 @@ class Rules:
 
 
 me = Rules()
-# me.printRules()
