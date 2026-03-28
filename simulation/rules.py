@@ -5,3 +5,11 @@ class Rules:
         self.goal = goal
         self.lose_condition = lose_condition
         self.probability = probability
+
+    def printRules(self):
+        print(self.money, self.goal, self.lose_condition, self.probability)
+
+
+
+me = Rules()
+me.printRules()
