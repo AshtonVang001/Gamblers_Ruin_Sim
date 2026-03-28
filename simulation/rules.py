@@ -12,4 +12,4 @@ class Rules:
 
 
 me = Rules()
-me.printRules()
+# me.printRules()
