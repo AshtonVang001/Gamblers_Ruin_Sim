@@ -36,8 +36,17 @@ class Simulation(Rules):
         print("Money left: ", self.money)
         print("Rounds played: ", self.rounds)
 
+    def playLoop(self):
+        for _ in range(10000):
+            if self.money == self.goal or self.money == self.lose_condition:
+                break
+            self.rounds += 1
+            self.simBets()
+        print("Money left: ", self.money)
+        print("Rounds played: ", self.rounds)
+
 player = Simulation();
-player.play();
+player.playLoop();
         
 
 
