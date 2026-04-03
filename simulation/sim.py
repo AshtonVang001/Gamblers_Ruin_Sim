@@ -36,17 +36,39 @@ class Simulation(Rules):
         print("Money left: ", self.money)
         print("Rounds played: ", self.rounds)
 
-    def playLoop(self):
-        for _ in range(10000):
-            if self.money == self.goal or self.money == self.lose_condition:
-                break
+
+    def playOneGame(self):
+        self.money = self.money
+        self.rounds = 0
+
+        while self.money != self.goal and self.money != self.lose_condition:
             self.rounds += 1
             self.simBets()
-        print("Money left: ", self.money)
-        print("Rounds played: ", self.rounds)
+
+        return self.money, self.rounds
+
+    def playManyGames(self, num_games=10000):
+        ruin_count = 0
+        goal_count = 0
+        total_rounds = 0
+
+        for _ in range(num_games):
+            final_money, rounds = self.playOneGame()
+
+            total_rounds += rounds
+
+            if final_money == self.lose_condition:
+                ruin_count += 1
+            else:
+                goal_count += 1
+
+        print("Games played:", num_games)
+        print("Probability of ruin:", ruin_count / num_games)
+        print("Probability of reaching goal:", goal_count / num_games)
+        print("Average rounds played:", total_rounds / num_games)
 
 player = Simulation();
-player.playLoop();
+player.playManyGames();
         
 
 
