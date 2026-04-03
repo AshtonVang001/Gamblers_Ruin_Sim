@@ -11,11 +11,11 @@ class Simulation(Rules):
     #the game itself
     #checks if a random number between 0.0-1.0 is either greater than or less than the probability (currently set to 0.5)
     #increases or decreases money based off that
-    def simBets(self):
+    def simBets(self, money):
         if random.random() < self.probability:
-            self.money += self.bet
+            return money + self.bet
         else:
-            self.money -= self.bet
+            return money - self.bet
 
     #player can either choose to play or bet here
     #player either types in y or n
@@ -37,38 +37,42 @@ class Simulation(Rules):
         print("Rounds played: ", self.rounds)
 
 
-    def playOneGame(self):
-        self.money = self.money
-        self.rounds = 0
+    def runOneGame(self):
+        money = self.money   # starting money from Rules
+        rounds = 0
 
-        while self.money != self.goal and self.money != self.lose_condition:
-            self.rounds += 1
-            self.simBets()
+        while money != self.goal and money != self.lose_condition:
+            money = self.simBets(money)
+            rounds += 1
 
-        return self.money, self.rounds
+        return money, rounds
 
-    def playManyGames(self, num_games=10000):
+    def runManyGames(self, num_games=10000):
         ruin_count = 0
         goal_count = 0
         total_rounds = 0
 
         for _ in range(num_games):
-            final_money, rounds = self.playOneGame()
+            final_money, rounds = self.runOneGame()
 
             total_rounds += rounds
 
             if final_money == self.lose_condition:
                 ruin_count += 1
-            else:
+            elif final_money == self.goal:
                 goal_count += 1
 
-        print("Games played:", num_games)
-        print("Probability of ruin:", ruin_count / num_games)
-        print("Probability of reaching goal:", goal_count / num_games)
-        print("Average rounds played:", total_rounds / num_games)
+        prob_ruin = ruin_count / num_games
+        prob_goal = goal_count / num_games
+        avg_rounds = total_rounds / num_games
+
+        print(f"Games played: {num_games}")
+        print(f"Probability of ruin: {prob_ruin}")
+        print(f"Probability of reaching ${self.goal}: {prob_goal}")
+        print(f"Average number of rounds played: {avg_rounds}")
 
 player = Simulation();
-player.playManyGames();
+player.runManyGames();
         
 
 
